@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELORA Catch Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- START SCREEN -->
+    <section id="startScreen" class="screen active">
+        <div class="glass start-card">
+            <div class="logo">ELORA</div>
+            <div class="subtitle">ELECTRONICS</div>
+
+            <h1>PRODUCT CATCH</h1>
+            <p class="intro">
+                First touch your product.<br>
+                After that, catch only the same product!
+            </p>
+
+            <input
+                type="text"
+                id="playerName"
+                placeholder="Enter your name"
+                maxlength="25"
+            >
+
+            <button id="startBtn" class="main-btn">
+                START GAME
+            </button>
+
+            <div class="rules">
+                <div>👆 First product = Your Target</div>
+                <div>✅ Same product = +5 Points</div>
+                <div>❌ Other product = GAME OVER</div>
+                <div>⚡ Speed increases after every catch</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GAME SCREEN -->
+    <section id="gameScreen" class="screen">
+
+        <header class="game-header">
+            <div class="brand-small">ELORA</div>
+
+            <div class="stat">
+                <span>SCORE</span>
+                <strong id="score">0</strong>
+            </div>
+
+            <div class="stat">
+                <span>CATCH</span>
+                <strong id="catchCount">0</strong>
+            </div>
+        </header>
+
+        <div class="target-panel">
+            <span>YOUR TARGET</span>
+            <strong id="targetName">FIRST TOUCH</strong>
+        </div>
+
+        <div id="gameArea">
+            <!-- Product images are created by JavaScript -->
+        </div>
+
+        <div id="scorePopup">+5</div>
+    </section>
+
+
+    <!-- SCORE SCREEN -->
+    <section id="scoreScreen" class="screen">
+        <div class="glass score-card">
+
+            <div class="game-over-icon">✦</div>
+
+            <h1>GAME OVER</h1>
+
+            <p id="finalPlayerName"></p>
+
+            <div class="final-score-box">
+                <span>TOTAL SCORE</span>
+                <strong id="finalScore">0</strong>
+            </div>
+
+            <div class="final-info">
+                <div>
+                    <span>CATCHES</span>
+                    <strong id="finalCatch">0</strong>
+                </div>
+
+                <div>
+                    <span>TARGET</span>
+                    <strong id="finalTarget">-</strong>
+                </div>
+            </div>
+
+            <button id="nextBtn" class="main-btn">
+                NEXT
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- OFFERS SCREEN -->
+    <section id="offersScreen" class="screen">
+
+        <div class="offers-header">
+            <div class="logo">ELORA</div>
+            <h1>YOUR SPECIAL OFFERS</h1>
+            <p>Select one product</p>
+        </div>
+
+        <div id="productsGrid" class="products-grid"></div>
+
+    </section>
+
+
+    <!-- FINAL COUPON -->
+    <section id="finalScreen" class="screen">
+
+        <div class="coupon">
+
+            <div class="coupon-top">
+                <div>
+                    <small>ELORA</small>
+                    <h1>SELLING CARD</h1>
+                </div>
+
+                <div class="coupon-code" id="sellingCode">
+                    A1
+                </div>
+            </div>
+
+            <div class="coupon-product">
+                <div class="coupon-image-box">
+                    <img id="selectedImage" src="" alt="Product">
+                </div>
+
+                <div class="coupon-details">
+                    <span>SELECTED PRODUCT</span>
+                    <h2 id="selectedName">Product</h2>
+
+                    <div class="price-line">
+                        <span>MRP</span>
+                        <del id="selectedMrp">₹999</del>
+                    </div>
+
+                    <div class="price-line offer">
+                        <span>OFFER PRICE</span>
+                        <strong id="selectedOffer">₹499</strong>
+                    </div>
+
+                    <div class="discount" id="selectedDiscount">
+                        50% OFF
+                    </div>
+                </div>
+            </div>
+
+            <div class="coupon-bottom">
+
+                <div>
+                    <span>PLAYER</span>
+                    <strong id="couponPlayer">Player</strong>
+                </div>
+
+                <div>
+                    <span>SCORE</span>
+                    <strong id="couponScore">0</strong>
+                </div>
+
+                <div>
+                    <span>CODE</span>
+                    <strong id="couponCodeBottom">A1</strong>
+                </div>
+
+            </div>
+
+            <a
+                id="amazonBtn"
+                class="amazon-btn"
+                href="https://www.amazon.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                SHOP PRODUCT
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

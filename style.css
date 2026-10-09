@@ -1,0 +1,956 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #070817;
+    color: white;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button,
+img,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================
+   SCREEN
+========================= */
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    overflow: hidden;
+}
+
+.screen.active {
+    display: flex;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+#startScreen,
+#scoreScreen,
+#offersScreen,
+#finalScreen {
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(circle at 15% 20%, #653cff55, transparent 28%),
+        radial-gradient(circle at 85% 15%, #00eaff44, transparent 25%),
+        radial-gradient(circle at 70% 85%, #ff3cac44, transparent 30%),
+        linear-gradient(135deg, #060718, #11152d, #080912);
+}
+
+#startScreen::before,
+#scoreScreen::before,
+#offersScreen::before,
+#finalScreen::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background:
+        linear-gradient(
+            120deg,
+            transparent 30%,
+            rgba(255,255,255,0.04) 40%,
+            transparent 50%
+        );
+    animation: backgroundMove 9s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes backgroundMove {
+    from {
+        transform: translateX(-20%);
+    }
+
+    to {
+        transform: translateX(20%);
+    }
+}
+
+
+/* =========================
+   GLASS CARD
+========================= */
+
+.glass {
+    position: relative;
+    z-index: 2;
+    width: min(92%, 480px);
+    padding: 38px 30px;
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.14),
+            rgba(255,255,255,0.04)
+        );
+
+    border: 1px solid rgba(255,255,255,0.18);
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,0.6),
+        inset 0 1px rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(25px);
+
+    text-align: center;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    font-size: 48px;
+    font-weight: 1000;
+    letter-spacing: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd84d,
+            #ffffff,
+            #00eaff,
+            #ff4fd8
+        );
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    filter: drop-shadow(0 0 15px rgba(0,220,255,0.35));
+}
+
+.subtitle {
+    font-size: 11px;
+    letter-spacing: 7px;
+    opacity: 0.65;
+    margin-top: -5px;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: clamp(25px, 6vw, 42px);
+    font-weight: 1000;
+}
+
+.intro {
+    margin: 18px 0 25px;
+    line-height: 1.7;
+    color: #cbd2e9;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+#playerName {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    outline: none;
+
+    background: rgba(0,0,0,0.35);
+    color: white;
+
+    font-size: 16px;
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+#playerName:focus {
+    border-color: #00eaff;
+    box-shadow: 0 0 20px #00eaff33;
+}
+
+#playerName::placeholder {
+    color: #9ca4bf;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.main-btn {
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    padding: 17px;
+
+    cursor: pointer;
+
+    color: #070817;
+    font-size: 16px;
+    font-weight: 1000;
+    letter-spacing: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd84d,
+            #00eaff,
+            #ff4fd8
+        );
+
+    box-shadow:
+        0 12px 30px rgba(0,220,255,0.25);
+
+    transition: 0.25s;
+}
+
+.main-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+}
+
+.main-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   RULES
+========================= */
+
+.rules {
+    margin-top: 25px;
+    display: grid;
+    gap: 9px;
+    text-align: left;
+    font-size: 13px;
+    color: #d8def3;
+}
+
+
+/* =========================
+   GAME
+========================= */
+
+#gameScreen {
+    flex-direction: column;
+    background:
+        radial-gradient(circle at 20% 20%, #552cff33, transparent 30%),
+        radial-gradient(circle at 80% 80%, #ff28c733, transparent 30%),
+        linear-gradient(145deg, #050614, #0c1024, #070713);
+}
+
+.game-header {
+    position: relative;
+    z-index: 10;
+
+    height: 70px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 18px;
+
+    background: rgba(5,7,20,0.72);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand-small {
+    font-size: 22px;
+    font-weight: 1000;
+    letter-spacing: 3px;
+    color: #ffd84d;
+}
+
+.stat {
+    min-width: 75px;
+    text-align: center;
+}
+
+.stat span {
+    display: block;
+    font-size: 9px;
+    color: #9ba3bd;
+    letter-spacing: 1px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 22px;
+    color: white;
+}
+
+
+/* TARGET */
+
+.target-panel {
+    position: relative;
+    z-index: 9;
+
+    height: 58px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,216,77,0.12),
+            rgba(0,234,255,0.12),
+            rgba(255,79,216,0.12)
+        );
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.target-panel span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #aeb5cc;
+}
+
+.target-panel strong {
+    color: #ffd84d;
+    font-size: 14px;
+}
+
+
+/* GAME AREA */
+
+#gameArea {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    perspective: 1000px;
+    touch-action: manipulation;
+
+    background:
+        radial-gradient(circle at 50% 50%, #ffffff06, transparent 45%);
+}
+
+
+/* =========================
+   FALLING PRODUCT
+========================= */
+
+.falling-product {
+    position: absolute;
+
+    width: 105px;
+    height: 125px;
+
+    object-fit: contain;
+
+    padding: 8px;
+
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
+    filter:
+        drop-shadow(0 15px 18px rgba(0,0,0,0.7))
+        drop-shadow(0 0 12px var(--glow));
+
+    transform-style: preserve-3d;
+
+    transition: filter 0.15s;
+}
+
+.falling-product::selection {
+    background: transparent;
+}
+
+.falling-product:hover {
+    filter:
+        drop-shadow(0 15px 18px rgba(0,0,0,0.7))
+        drop-shadow(0 0 22px var(--glow));
+}
+
+
+/* Product glow circles */
+
+.product-glow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    background: var(--glow);
+
+    opacity: 0.14;
+
+    filter: blur(25px);
+
+    pointer-events: none;
+}
+
+
+/* SCORE POPUP */
+
+#scorePopup {
+    position: fixed;
+    z-index: 100;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    color: #fff;
+    font-size: 55px;
+    font-weight: 1000;
+
+    text-shadow:
+        0 0 15px #00eaff,
+        0 0 30px #00eaff;
+
+    pointer-events: none;
+}
+
+#scorePopup.show {
+    animation: scorePop 0.65s ease-out;
+}
+
+@keyframes scorePop {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0;
+    }
+
+    30% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -90%) scale(1);
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   SCORE SCREEN
+========================= */
+
+.game-over-icon {
+    width: 70px;
+    height: 70px;
+
+    display: grid;
+    place-items: center;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3cac,
+            #784cff,
+            #00eaff
+        );
+
+    font-size: 30px;
+
+    box-shadow:
+        0 0 35px #784cff66;
+}
+
+.score-card h1 {
+    color: #ff74d8;
+}
+
+#finalPlayerName {
+    margin: 8px 0 25px;
+    color: #c8cee2;
+    font-size: 16px;
+}
+
+.final-score-box {
+    padding: 20px;
+    border-radius: 20px;
+
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.final-score-box span,
+.final-info span,
+.coupon-bottom span {
+    display: block;
+    font-size: 9px;
+    color: #929ab4;
+    letter-spacing: 1.5px;
+}
+
+.final-score-box strong {
+    display: block;
+    margin-top: 5px;
+
+    font-size: 50px;
+
+    background: linear-gradient(90deg,#ffd84d,#00eaff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.final-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+
+    margin: 15px 0 20px;
+}
+
+.final-info > div {
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.06);
+}
+
+.final-info strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 17px;
+}
+
+
+/* =========================
+   OFFERS
+========================= */
+
+#offersScreen {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 25px 15px;
+    overflow-y: auto;
+}
+
+.offers-header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.offers-header .logo {
+    font-size: 32px;
+}
+
+.offers-header h1 {
+    margin-top: 10px;
+    font-size: clamp(24px, 5vw, 38px);
+}
+
+.offers-header p {
+    margin-top: 7px;
+    color: #aeb5ca;
+}
+
+.products-grid {
+    position: relative;
+    z-index: 2;
+
+    width: min(1200px, 100%);
+
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+
+    gap: 20px;
+
+    padding-bottom: 30px;
+}
+
+
+/* OFFER CARD */
+
+.offer-card {
+    position: relative;
+
+    padding: 18px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.15),
+            rgba(255,255,255,0.04)
+        );
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.45);
+
+    transform-style: preserve-3d;
+
+    transition: 0.3s;
+}
+
+.offer-card:hover {
+    transform:
+        perspective(800px)
+        rotateX(4deg)
+        rotateY(-4deg)
+        translateY(-7px);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.55);
+}
+
+.offer-image {
+    width: 100%;
+    height: 160px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    filter:
+        drop-shadow(0 15px 15px rgba(0,0,0,0.6));
+}
+
+.offer-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.mrp {
+    color: #9ba3b9;
+    font-size: 13px;
+}
+
+.offer-price {
+    font-size: 25px;
+    font-weight: 1000;
+    color: #ffd84d;
+    margin: 4px 0;
+}
+
+.discount {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 8px;
+
+    background: #ff3cac22;
+    color: #ff77d8;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.select-btn {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00eaff,
+            #784cff,
+            #ff3cac
+        );
+
+    color: white;
+
+    font-weight: 1000;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.select-btn:hover {
+    transform: scale(1.03);
+}
+
+
+/* =========================
+   COUPON
+========================= */
+
+.coupon {
+    position: relative;
+    z-index: 2;
+
+    width: min(92%, 650px);
+
+    padding: 25px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171a36,
+            #0a0c1c
+        );
+
+    border: 1px solid rgba(255,255,255,0.18);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.65),
+        0 0 40px #784cff22;
+}
+
+.coupon-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px dashed #555b78;
+}
+
+.coupon-top small {
+    color: #ffd84d;
+    letter-spacing: 3px;
+}
+
+.coupon-top h1 {
+    margin: 5px 0 0;
+    font-size: 25px;
+}
+
+.coupon-code {
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: #ffd84d;
+    color: #080912;
+
+    font-weight: 1000;
+}
+
+.coupon-product {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 15px;
+
+    align-items: center;
+
+    padding: 25px 0;
+}
+
+.coupon-image-box {
+    min-height: 210px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle,
+            #00eaff18,
+            transparent 70%
+        );
+}
+
+.coupon-image-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 20px 20px rgba(0,0,0,0.6));
+}
+
+.coupon-details > span {
+    color: #8f97b1;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.coupon-details h2 {
+    margin: 8px 0 18px;
+    font-size: 22px;
+}
+
+.price-line {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 7px 0;
+
+    color: #aab1c7;
+}
+
+.price-line.offer {
+    color: white;
+}
+
+.price-line.offer strong {
+    color: #ffd84d;
+    font-size: 24px;
+}
+
+.coupon-details .discount {
+    margin-top: 5px;
+}
+
+.coupon-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    padding: 17px 0;
+
+    border-top: 1px dashed #555b78;
+}
+
+.coupon-bottom > div {
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+}
+
+.coupon-bottom strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.amazon-btn {
+    display: block;
+
+    text-align: center;
+    text-decoration: none;
+
+    padding: 15px;
+
+    border-radius: 14px;
+
+    color: #05060e;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd84d,
+            #00eaff
+        );
+
+    font-weight: 1000;
+    letter-spacing: 1px;
+
+    transition: 0.2s;
+}
+
+.amazon-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .glass {
+        padding: 28px 20px;
+    }
+
+    .logo {
+        font-size: 38px;
+    }
+
+    .falling-product {
+        width: 82px;
+        height: 100px;
+    }
+
+    .products-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+    .offer-card {
+        padding: 12px;
+    }
+
+    .offer-image {
+        height: 115px;
+    }
+
+    .offer-card h2 {
+        font-size: 14px;
+    }
+
+    .offer-price {
+        font-size: 20px;
+    }
+
+    .coupon-product {
+        grid-template-columns: 1fr;
+    }
+
+    .coupon-image-box {
+        min-height: 160px;
+    }
+
+    .coupon-image-box img {
+        height: 160px;
+    }
+
+    .coupon-details h2 {
+        font-size: 18px;
+    }
+
+    .game-header {
+        padding: 8px 12px;
+    }
+
+    .brand-small {
+        font-size: 18px;
+    }
+}
